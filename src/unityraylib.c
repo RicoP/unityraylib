@@ -132,7 +132,7 @@
 #   undef CloseWindow
 #   undef Rectangle
 #   undef ShowCursor
-//#   undef LoadImage
+#   undef LoadImage
 //#   undef LoadImageA
 //#   undef LoadImageW
 #   undef DrawText
