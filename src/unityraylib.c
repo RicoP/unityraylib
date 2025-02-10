@@ -180,6 +180,13 @@
 
 #undef _unused
 #if defined(_WIN32)
+    // use pragma linking directly for windows
+    #pragma comment(lib, "gdi32.lib")
+    #pragma comment(lib, "user32.lib")
+    #pragma comment(lib, "shell32.lib")
+    #pragma comment(lib, "winmm.lib")
+    #pragma comment(lib, "xinput.lib")
+
     //  HACK for raudio
     #include "external/miniaudio.h"
     #undef _WIN32
