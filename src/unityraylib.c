@@ -113,17 +113,19 @@
 #   undef KEY_ESCAPE
 #   undef KEY_LEFT_CONTROL
 #   undef KEY_MINUS
-
-#   undef GL_VERSION
-#   undef GL_EXTENSIONS
-#   undef GL_NUM_EXTENSIONS
-#   undef GL_CONTEXT_FLAGS
 #endif
 
 #if defined (_WIN32)
-#undef APIENTRY
-#include "rglfw.c"
+#   undef APIENTRY
+#   define APIENTRY    WINAPI
 #endif
+
+
+#undef GL_VERSION
+#undef GL_EXTENSIONS
+#undef GL_NUM_EXTENSIONS
+#undef GL_CONTEXT_FLAGS
+#include "rglfw.c"
 
 
 //ignore windows for now
