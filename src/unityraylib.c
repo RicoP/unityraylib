@@ -190,6 +190,7 @@
     //  HACK for raudio
     #include "external/miniaudio.h"
     #undef _WIN32
+    #define dlsym GetProcAddress
 #endif
 
 #include "raudio.c"
