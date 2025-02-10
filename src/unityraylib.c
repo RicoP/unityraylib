@@ -16,6 +16,7 @@
 #endif
 
 #if defined(_WIN32)
+/*
 #   if !defined(WIN32_LEAN_AND_MEAN)
 #        define WIN32_LEAN_AND_MEAN
 #   endif
@@ -40,15 +41,21 @@
 #undef CloseWindow
 #undef Rectangle
 #undef ShowCursor
-#undef LoadImage 
+#undef LoadImage
 #undef LoadImageA
 #undef LoadImageW
-#undef DrawText 
+#undef DrawText
 #undef DrawTextA
 #undef DrawTextW
-#undef DrawTextEx 
+#undef DrawTextEx
 #undef DrawTextExA
 #undef DrawTextExW
+
+#undef ARRAYSIZE
+
+// for raudio
+#define WINGDI_ALREADY_INCLUDED
+*/
 #endif
 
 #include "raylib.h"
@@ -58,13 +65,6 @@
 #include "rtextures.c"
 #undef COLOR_EQUAL
 #undef MIN
-
-
-#include "raudio.c"
-#undef L
-#undef C
-#undef R
-
 
 #include "rmodels.c"
 #undef COLOR_EQUAL
@@ -112,3 +112,10 @@
 
 
 #include "rglfw.c"
+
+
+#undef _unused
+#include "raudio.c"
+#undef L
+#undef C
+#undef R
