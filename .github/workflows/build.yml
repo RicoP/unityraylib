@@ -1,0 +1,38 @@
+name: Builds
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  Linux:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Compile on Linux
+      working-directory: tests
+      run: |
+        gcc -I../include/unityraylib/raylib \
+        -I../include/unityraylib/raylib/external/glfw/include \
+        ../src/unityraylib.c \
+        fps.c \
+        -lm
+
+  Windows:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: TheMrMilchmann/setup-msvc-dev@v3
+      with:
+        arch: x64
+    - name: Compile on Windows
+      working-directory: tests
+      shell: cmd
+      run: |
+        setlocal EnableExtensions EnableDelayedExpansion
+        cl /EHsc /nologo ^
+        /I../include/unityraylib/raylib ^
+        /I../include/unityraylib/raylib/external/glfw/include ^
+        ../src/unityraylib.c fps.c
