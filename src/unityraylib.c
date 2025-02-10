@@ -175,14 +175,14 @@
 
 #include "utils.c"
 
-
-//ignore windows for now
-#if defined(__linux__)
 #if defined(_WIN32)
 #   define HWND HWND_
 #endif
 #include "rcore.c"
 #undef GLFW_INCLUDE_NONE
+
+//ignore windows for now
+#if defined(__linux__)
 
 #undef _unused
 #include "raudio.c"
