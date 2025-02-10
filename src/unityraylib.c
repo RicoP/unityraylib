@@ -120,11 +120,11 @@
 #   undef GL_CONTEXT_FLAGS
 #endif
 
+#include "rglfw.c"
 
 
 //ignore windows for now
 #if defined(__linux__)
-#include "rglfw.c"
 
 #undef _unused
 #include "raudio.c"
