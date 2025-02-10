@@ -132,6 +132,16 @@
 #        undef WIN32_LEAN_AND_MEAN
 #   endif
 #   include <windows.h>
+
+#   include <objbase.h>        // Component Object Model (COM) header
+#   include <mmreg.h>          // Windows Multimedia, defines some WAVE structs
+#   include <mmsystem.h>       // Windows Multimedia, used by Windows GDI, defines DIBINDEX macro
+
+//  Some required types defined for MSVC/TinyC compiler
+#   if defined(_MSC_VER) || defined(__TINYC__)
+        #include "propidl.h"
+#   endif
+
 //  remove all our redfintions so that raylib can define them properly
 #   undef CloseWindow
 #   undef Rectangle
