@@ -2,6 +2,10 @@
     "files.associations": {
         "*.m": "c",
         "raymath.h": "c",
-        "win32_clipboard.h": "c"
+        "win32_clipboard.h": "c",
+        "xlib.h": "c",
+        "x.h": "c",
+        "input-event-codes.h": "c",
+        "input.h": "c"
     }
 }
