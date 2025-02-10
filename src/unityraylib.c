@@ -107,9 +107,6 @@
 
 #if defined(_WIN32)
 //  on winodws let's include window.h before other headers have a chance to have control over naming conventions
-#   if defined(WIN32_LEAN_AND_MEAN)
-#        undef WIN32_LEAN_AND_MEAN
-#   endif
 #   define CloseWindow CloseWindowWin32
 #   define Rectangle RectangleWin32
 #   define ShowCursor ShowCursorWin32
@@ -131,10 +128,16 @@
 #undef GL_CONTEXT_FLAGS
 
 #if defined(_WIN32)
+#   if defined(WIN32_LEAN_AND_MEAN)
+#        undef WIN32_LEAN_AND_MEAN
+#   endif
+#   include <windows.h>
+
 //  from raudio.c
 #   include <objbase.h>        // Component Object Model (COM) header
 #   include <mmreg.h>          // Windows Multimedia, defines some WAVE structs
 #   include <mmsystem.h>       // Windows Multimedia, used by Windows GDI, defines DIBINDEX macro
+#   include <mciapi.h.h>
 #   if defined(_MSC_VER) || defined(__TINYC__)
 #       include "propidl.h"
 #   endif
