@@ -12,7 +12,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Install dependencies
-      run: sudo apt-get install -y libx11-dev
+      run: sudo apt-get install -y libx11-dev libxcursor-dev
     - name: Compile on Linux
       working-directory: tests
       run: |
