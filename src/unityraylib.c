@@ -113,9 +113,11 @@
 
 #include "rglfw.c"
 
-
+#if defined(__linux__)
+//ignore windows for now
 #undef _unused
 #include "raudio.c"
 #undef L
 #undef C
 #undef R
+#endif
