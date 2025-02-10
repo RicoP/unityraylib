@@ -183,6 +183,8 @@
 
 #if defined(_WIN32)
 #   define tagBITMAPINFOHEADER tagBITMAPINFOHEADER__
+#   define BITMAPINFOHEADER BITMAPINFOHEADER__
+#   define PBITMAPINFOHEADER PBITMAPINFOHEADER__
 #endif
 #undef _unused
 #include "raudio.c"
