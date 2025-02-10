@@ -117,7 +117,8 @@
 
 #if defined (_WIN32)
 #   undef APIENTRY
-#   define APIENTRY    WINAPI
+typedef WINAPI APIENTRY
+#   define APIENTRY APIENTRY
 #endif
 
 
