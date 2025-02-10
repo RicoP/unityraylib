@@ -55,6 +55,8 @@
 
 // for raudio
 #define WINGDI_ALREADY_INCLUDED
+#define WINUSER_ALREADY_INCLUDED
+#define WINGDI_ALREADY_INCLUDED
 //*/
 #endif
 
