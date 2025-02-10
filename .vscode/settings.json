@@ -6,6 +6,7 @@
         "xlib.h": "c",
         "x.h": "c",
         "input-event-codes.h": "c",
-        "input.h": "c"
+        "input.h": "c",
+        "miniaudio.h": "c"
     }
 }
