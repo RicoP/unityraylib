@@ -33,6 +33,8 @@
 #define DrawTextW DrawTextWin32
 #define DrawTextExA DrawTextExAWin32
 #define DrawTextExW DrawTextExWin32
+#define PlaySoundA WIN32PlaySoundA
+#define PlaySoundW WIN32PlaySoundW
 
 // include windows
 #include <windows.h>
@@ -50,6 +52,10 @@
 #undef DrawTextEx
 #undef DrawTextExA
 #undef DrawTextExW
+
+#undef PlaySoundA
+#undef PlaySoundW
+#undef PlaySound
 
 #undef ARRAYSIZE
 
