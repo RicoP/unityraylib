@@ -137,7 +137,8 @@
 #   include <objbase.h>        // Component Object Model (COM) header
 #   include <mmreg.h>          // Windows Multimedia, defines some WAVE structs
 #   include <mmsystem.h>       // Windows Multimedia, used by Windows GDI, defines DIBINDEX macro
-#   include <mciapi.h.h>
+#   include <mciapi.h>
+#   include <mmiscapi.h>
 #   if defined(_MSC_VER) || defined(__TINYC__)
 #       include "propidl.h"
 #   endif
