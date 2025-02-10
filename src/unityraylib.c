@@ -16,9 +16,9 @@
 #endif
 
 #if defined(_WIN32)
-/*
-#   if !defined(WIN32_LEAN_AND_MEAN)
-#        define WIN32_LEAN_AND_MEAN
+//*
+#   if defined(WIN32_LEAN_AND_MEAN)
+#        undef WIN32_LEAN_AND_MEAN
 #   endif
 
 //from https://github.com/raylib-extras/extras-c/blob/main/raylib_win32.h
@@ -55,7 +55,7 @@
 
 // for raudio
 #define WINGDI_ALREADY_INCLUDED
-*/
+//*/
 #endif
 
 #include "raylib.h"
@@ -111,10 +111,10 @@
 
 
 
+//ignore windows for now
+#if defined(__linux__)
 #include "rglfw.c"
 
-#if defined(__linux__)
-//ignore windows for now
 #undef _unused
 #include "raudio.c"
 #undef L

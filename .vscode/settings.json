@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "*.m": "c",
-        "raymath.h": "c"
+        "raymath.h": "c",
+        "win32_clipboard.h": "c"
     }
 }
