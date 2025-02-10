@@ -132,16 +132,6 @@
 #        undef WIN32_LEAN_AND_MEAN
 #   endif
 #   include <windows.h>
-
-//  from raudio.c
-#   include <objbase.h>        // Component Object Model (COM) header
-#   include <mmreg.h>          // Windows Multimedia, defines some WAVE structs
-#   include <mmsystem.h>       // Windows Multimedia, used by Windows GDI, defines DIBINDEX macro
-#   include <mciapi.h>
-#   include <mmiscapi.h>
-#   if defined(_MSC_VER) || defined(__TINYC__)
-#       include "propidl.h"
-#   endif
 //  remove all our redfintions so that raylib can define them properly
 #   undef CloseWindow
 #   undef Rectangle
@@ -197,8 +187,11 @@
 #   define BITMAPINFOHEADER BITMAPINFOHEADER__
 #   define PBITMAPINFOHEADER PBITMAPINFOHEADER__
 #endif
+
+#if defined(_linux)
 #undef _unused
 #include "raudio.c"
 #undef L
 #undef C
 #undef R
+#endif
