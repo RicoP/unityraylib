@@ -110,14 +110,14 @@
 #   define CloseWindow CloseWindowWin32
 #   define Rectangle RectangleWin32
 #   define ShowCursor ShowCursorWin32
-#   define LoadImageA LoadImageAWin32
-#   define LoadImageW LoadImageWin32
-#   define DrawTextA DrawTextAWin32
-#   define DrawTextW DrawTextWin32
-#   define DrawTextExA DrawTextExAWin32
-#   define DrawTextExW DrawTextExWin32
-#   define PlaySoundA WIN32PlaySoundA
-#   define PlaySoundW WIN32PlaySoundW
+//#   define LoadImageA LoadImageAWin32
+//#   define LoadImageW LoadImageWWin32
+//#   define DrawTextA DrawTextAWin32
+//#   define DrawTextW DrawTextWin32
+//#   define DrawTextExA DrawTextExAWin32
+//#   define DrawTextExW DrawTextExWin32
+//#   define PlaySoundA WIN32PlaySoundA
+//#   define PlaySoundW WIN32PlaySoundW
 #endif
 
 // this will also include windows.h
@@ -132,18 +132,18 @@
 #   undef CloseWindow
 #   undef Rectangle
 #   undef ShowCursor
-#   undef LoadImage
-#   undef LoadImageA
-#   undef LoadImageW
+//#   undef LoadImage
+//#   undef LoadImageA
+//#   undef LoadImageW
 #   undef DrawText
-#   undef DrawTextA
-#   undef DrawTextW
+//#   undef DrawTextA
+//#   undef DrawTextW
 #   undef DrawTextEx
-#   undef DrawTextExA
-#   undef DrawTextExW
+//#   undef DrawTextExA
+//#   undef DrawTextExW
 
-#   undef PlaySoundA
-#   undef PlaySoundW
+//#   undef PlaySoundA
+//#   undef PlaySoundW
 #   undef PlaySound
 
 #   undef ARRAYSIZE
