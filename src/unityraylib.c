@@ -15,6 +15,7 @@
         #define _GLFW_X11
     #endif
     #if defined(_GLFW_X11)
+        // rename X11 Font struct to not conflict with raylibs Font
         #define Font Font_
         #include <X11/Xlib.h>
         #include <X11/Xcursor/Xcursor.h>
@@ -104,9 +105,25 @@
     #endif
 #endif
 
-#if defined(__linux__)
-//#   define Font Font_
+#if defined(_WIN32)
+//  on winodws let's include window.h before other headers have a chance to have control over naming conventions
+#   if defined(WIN32_LEAN_AND_MEAN)
+#        undef WIN32_LEAN_AND_MEAN
+#   endif
+#   define CloseWindow CloseWindowWin32
+#   define Rectangle RectangleWin32
+#   define ShowCursor ShowCursorWin32
+#   define LoadImageA LoadImageAWin32
+#   define LoadImageW LoadImageWin32
+#   define DrawTextA DrawTextAWin32
+#   define DrawTextW DrawTextWin32
+#   define DrawTextExA DrawTextExAWin32
+#   define DrawTextExW DrawTextExWin32
+#   define PlaySoundA WIN32PlaySoundA
+#   define PlaySoundW WIN32PlaySoundW
+#   include <windows.h>
 #endif
+
 #include "rglfw.c"
 #undef GL_VERSION
 #undef GL_EXTENSIONS
@@ -114,54 +131,30 @@
 #undef GL_CONTEXT_FLAGS
 
 #if defined(_WIN32)
-//*
-#   if defined(WIN32_LEAN_AND_MEAN)
-#        undef WIN32_LEAN_AND_MEAN
-#   endif
+//  remove all our redfintions so that raylib can define them properly
+#   undef CloseWindow
+#   undef Rectangle
+#   undef ShowCursor
+#   undef LoadImage
+#   undef LoadImageA
+#   undef LoadImageW
+#   undef DrawText
+#   undef DrawTextA
+#   undef DrawTextW
+#   undef DrawTextEx
+#   undef DrawTextExA
+#   undef DrawTextExW
 
-//from https://github.com/raylib-extras/extras-c/blob/main/raylib_win32.h
-// move the windows functions to new names
-// note that you can't call these functions or structures from your code, but you should not neeed to
-#define CloseWindow CloseWindowWin32
-#define Rectangle RectangleWin32
-#define ShowCursor ShowCursorWin32
-#define LoadImageA LoadImageAWin32
-#define LoadImageW LoadImageWin32
-#define DrawTextA DrawTextAWin32
-#define DrawTextW DrawTextWin32
-#define DrawTextExA DrawTextExAWin32
-#define DrawTextExW DrawTextExWin32
-#define PlaySoundA WIN32PlaySoundA
-#define PlaySoundW WIN32PlaySoundW
+#   undef PlaySoundA
+#   undef PlaySoundW
+#   undef PlaySound
 
-// include windows
-#include <windows.h>
+#   undef ARRAYSIZE
 
-// remove all our redfintions so that raylib can define them properly
-#undef CloseWindow
-#undef Rectangle
-#undef ShowCursor
-#undef LoadImage
-#undef LoadImageA
-#undef LoadImageW
-#undef DrawText
-#undef DrawTextA
-#undef DrawTextW
-#undef DrawTextEx
-#undef DrawTextExA
-#undef DrawTextExW
-
-#undef PlaySoundA
-#undef PlaySoundW
-#undef PlaySound
-
-#undef ARRAYSIZE
-
-// for raudio
-#define WINGDI_ALREADY_INCLUDED
-#define WINUSER_ALREADY_INCLUDED
-#define WINGDI_ALREADY_INCLUDED
-//*/
+//  for raudio
+#   define WINGDI_ALREADY_INCLUDED
+#   define WINUSER_ALREADY_INCLUDED
+#   define WINGDI_ALREADY_INCLUDED
 #endif
 
 #include "raylib.h"
