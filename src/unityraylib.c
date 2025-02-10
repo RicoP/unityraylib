@@ -87,6 +87,9 @@
 #   undef KEY_LEFT_CONTROL
 #   undef KEY_NUM_LOCK
 #endif
+#if defined(_WIN32)
+#   define HWND HWND_
+#endif
 #include "rcore.c"
 #undef GLFW_INCLUDE_NONE
 
