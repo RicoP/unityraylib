@@ -181,6 +181,9 @@
 #include "rcore.c"
 #undef GLFW_INCLUDE_NONE
 
+#if defined(_WIN32)
+#   define tagBITMAPINFOHEADER tagBITMAPINFOHEADER__
+#endif
 #undef _unused
 #include "raudio.c"
 #undef L
