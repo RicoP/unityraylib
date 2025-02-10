@@ -121,13 +121,6 @@
 #   define DrawTextExW DrawTextExWin32
 #   define PlaySoundA WIN32PlaySoundA
 #   define PlaySoundW WIN32PlaySoundW
-//  from raudio.c
-#   include <objbase.h>        // Component Object Model (COM) header
-#   include <mmreg.h>          // Windows Multimedia, defines some WAVE structs
-#   include <mmsystem.h>       // Windows Multimedia, used by Windows GDI, defines DIBINDEX macro
-#   if defined(_MSC_VER) || defined(__TINYC__)
-#       include "propidl.h"
-#   endif
 #endif
 
 // this will also include windows.h
@@ -138,6 +131,13 @@
 #undef GL_CONTEXT_FLAGS
 
 #if defined(_WIN32)
+//  from raudio.c
+#   include <objbase.h>        // Component Object Model (COM) header
+#   include <mmreg.h>          // Windows Multimedia, defines some WAVE structs
+#   include <mmsystem.h>       // Windows Multimedia, used by Windows GDI, defines DIBINDEX macro
+#   if defined(_MSC_VER) || defined(__TINYC__)
+#       include "propidl.h"
+#   endif
 //  remove all our redfintions so that raylib can define them properly
 #   undef CloseWindow
 #   undef Rectangle
