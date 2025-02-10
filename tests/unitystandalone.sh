@@ -3,7 +3,6 @@ time gcc -I../include/unityraylib/raylib \
     -I../include/unityraylib/raylib/external/glfw/include \
     ../src/unityraylib.c \
     fps.c \
-    -J `nproc` \
     -lm \
     -o unity.out
 
@@ -14,6 +13,5 @@ time gcc -D_GLFW_X11 \
     -I../include/unityraylib/raylib/external/glfw/include \
     ../include/unityraylib/raylib/*.c \
     fps.c \
-    -J `nproc` \
     -lm \
     -o regular.out

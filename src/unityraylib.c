@@ -1,15 +1,3 @@
-/*
-gcc -D_GLFW_X11 \
-    -DPLATFORM_DESKTOP_GLFW \
-    -I../include/unityraylib/raylib \
-    -I../include/unityraylib/raylib/external/glfw/include \
-    ../include/unityraylib/raylib/*.c \
-    fps.c \
-    -lm
-*/
-
-
-
 #if !defined(PLATFORM_DESKTOP_GLFW) && \
     !defined(PLATFORM_DESKTOP_SDL)  && \
     !defined(PLATFORM_DESKTOP_RGFW) && \
