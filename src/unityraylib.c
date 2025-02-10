@@ -15,11 +15,16 @@
     #include <poll.h>
 #endif
 
+#if defined(_WIN32)
+    #if !defined(WIN32_LEAN_AND_MEAN)
+        #define WIN32_LEAN_AND_MEAN
+    #endif
+    #include <windows.h>
+#endif
+
 #include "raylib.h"
 #define RAYMATH_STATIC_INLINE
 #include "raymath.h"
-
-//#define Font Font_
 
 #include "rtextures.c"
 #undef COLOR_EQUAL
@@ -27,7 +32,6 @@
 
 
 #include "raudio.c"
-
 #undef L
 #undef C
 #undef R
@@ -43,38 +47,39 @@
 
 #include "utils.c"
 
-#undef KEY_CAPS_LOCK
-#undef KEY_ESCAPE
-#undef KEY_KP_ADD
-#undef KEY_KP_SUBTRACT
-#undef KEY_LEFT_CONTROL
-#undef KEY_LEFT_CONTROL
-#undef KEY_NUM_LOCK
-
+#if defined(__linux__)
+#   undef KEY_CAPS_LOCK
+#   undef KEY_ESCAPE
+#   undef KEY_KP_ADD
+#   undef KEY_KP_SUBTRACT
+#   undef KEY_LEFT_CONTROL
+#   undef KEY_LEFT_CONTROL
+#   undef KEY_NUM_LOCK
+#endif
 #include "rcore.c"
+#undef GLFW_INCLUDE_NONE
 
 
 #if defined(__linux__)
-    // Avoid name conflict with X11
-    #define Font Font_
+//  Avoid name conflict with X11
+#   define Font Font_
+#   undef KEY_APOSTROPHE
+#   undef KEY_COMMA
+#   undef KEY_LEFT_CONTROL
+#   undef KEY_KP_SUBTRACT
+#   undef KEY_KP_ADD
+#   undef KEY_CAPS_LOCK
+#   undef KEY_NUM_LOCK
+#   undef KEY_ESCAPE
+#   undef KEY_LEFT_CONTROL
+#   undef KEY_MINUS
+
+#   undef GL_VERSION
+#   undef GL_EXTENSIONS
+#   undef GL_NUM_EXTENSIONS
+#   undef GL_CONTEXT_FLAGS
 #endif
 
-#undef GLFW_INCLUDE_NONE
 
-#undef KEY_APOSTROPHE
-#undef KEY_COMMA
-#undef KEY_LEFT_CONTROL
-#undef KEY_KP_SUBTRACT
-#undef KEY_KP_ADD
-#undef KEY_CAPS_LOCK
-#undef KEY_NUM_LOCK
-#undef KEY_ESCAPE
-#undef KEY_LEFT_CONTROL
-#undef KEY_MINUS
-
-#undef GL_VERSION
-#undef GL_EXTENSIONS
-#undef GL_NUM_EXTENSIONS
-#undef GL_CONTEXT_FLAGS
 
 #include "rglfw.c"
