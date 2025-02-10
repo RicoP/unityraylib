@@ -120,7 +120,10 @@
 #   undef GL_CONTEXT_FLAGS
 #endif
 
+#if defined (_WIN32)
+#undef APIENTRY
 #include "rglfw.c"
+#endif
 
 
 //ignore windows for now
