@@ -178,13 +178,13 @@
 #include "rcore.c"
 #undef GLFW_INCLUDE_NONE
 
+#undef _unused
 #if defined(_WIN32)
     //  HACK for raudio
     #include "external/miniaudio.h"
     #undef _WIN32
 #endif
 
-#undef _unused
 #include "raudio.c"
 #undef L
 #undef C
