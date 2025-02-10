@@ -121,9 +121,9 @@
 #   define DrawTextExW DrawTextExWin32
 #   define PlaySoundA WIN32PlaySoundA
 #   define PlaySoundW WIN32PlaySoundW
-#   include <windows.h>
 #endif
 
+// this will also include windows.h
 #include "rglfw.c"
 #undef GL_VERSION
 #undef GL_EXTENSIONS
