@@ -245,9 +245,6 @@ static FORCE_INLINE double my_signbitf(float x) { return __builtin_signbitf(x); 
 #include "rcore.c"
 #undef GLFW_INCLUDE_NONE
 
-#ifdef _unused
-#   undef _unused
-#endif
 #if defined(_WIN32)
 //  use pragma linking directly for windows
 #   pragma comment(lib, "gdi32.lib")
@@ -257,6 +254,7 @@ static FORCE_INLINE double my_signbitf(float x) { return __builtin_signbitf(x); 
 #   pragma comment(lib, "xinput.lib")
 
 //  HACK for raudio
+#   undef _unused
 #   include "external/miniaudio.h"
 #   undef _WIN32
 #   define dlsym GetProcAddress
