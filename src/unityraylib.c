@@ -241,6 +241,9 @@ static FORCE_INLINE double my_signbitf(float x) { return __builtin_signbitf(x); 
 #include "rcore.c"
 #undef GLFW_INCLUDE_NONE
 
+#ifdef _unused
+#   undef _unused
+#endif
 #if defined(_WIN32)
 //  use pragma linking directly for windows
 #   pragma comment(lib, "gdi32.lib")
@@ -258,7 +261,4 @@ static FORCE_INLINE double my_signbitf(float x) { return __builtin_signbitf(x); 
 #   define WINGDI_ALREADY_INCLUDED
 #endif
 
-#ifdef _unused
-#   undef _unused
-#endif
 #include "raudio.c"
