@@ -215,6 +215,10 @@ static FORCE_INLINE double my_signbitf(float x) { return __builtin_signbitf(x); 
 #   undef DrawTextEx
 #   undef PlaySound
 #   undef ARRAYSIZE
+
+#   define WINGDI_ALREADY_INCLUDED
+#   define WINUSER_ALREADY_INCLUDED
+#   define WINGDI_ALREADY_INCLUDED
 #endif
 
 #include "raylib.h"
@@ -256,9 +260,6 @@ static FORCE_INLINE double my_signbitf(float x) { return __builtin_signbitf(x); 
 #   include "external/miniaudio.h"
 #   undef _WIN32
 #   define dlsym GetProcAddress
-#   define WINGDI_ALREADY_INCLUDED
-#   define WINUSER_ALREADY_INCLUDED
-#   define WINGDI_ALREADY_INCLUDED
 #endif
 
 #include "raudio.c"
