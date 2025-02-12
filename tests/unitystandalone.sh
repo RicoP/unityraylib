@@ -1,3 +1,10 @@
+echo "stb build"
+time gcc -I../include/unityraylib/raylib \
+    fps.c \
+    unity.c \
+    -lm \
+    -o stb.out
+
 echo "unity build"
 time gcc -I../include/unityraylib/raylib \
     -I../include/unityraylib/raylib/external/glfw/include \

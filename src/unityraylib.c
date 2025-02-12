@@ -199,6 +199,14 @@ static FORCE_INLINE double my_signbitf(float x) { return __builtin_signbitf(x); 
 #   define ShowCursor ShowCursorWin32
 #endif
 
+#if defined(__linux__)
+//  include those two includes before wl_platform.h or x11_platform can snatch them
+//#   include "external/glfw/include/GLFW/glfw3.h"
+//#   include "external/glfw/src/xkb_unicode.h"
+//#   include "external/glfw/src/internal.h"
+//#   include "external/glfw/src/posix_poll.h"
+#   define GLFW_INVALID_CODEPOINT 0xffffffffu
+#endif
 // rglfw.c will also include windows.h
 #include "rglfw.c"
 #undef GL_VERSION
@@ -222,8 +230,24 @@ static FORCE_INLINE double my_signbitf(float x) { return __builtin_signbitf(x); 
 #endif
 
 #include "raylib.h"
-#define RAYMATH_STATIC_INLINE
-#include "raymath.h"
+//#define RAYMATH_STATIC_INLINE
+//#include "raymath.h"
+
+#if defined(_WIN32)
+#   define HWND HWND_
+#endif
+#include "rcore.c"
+#undef GLFW_INCLUDE_NONE
+#undef RLGL_IMPLEMENTATION
+#undef RAYMATH_IMPLEMENTATION
+#if defined(RGESTURES_IMPLEMENTATION)
+    #undef RGESTURES_IMPLEMENTATION
+#endif
+#if defined(RCAMERA_IMPLEMENTATION)
+    #undef RCAMERA_IMPLEMENTATION
+#endif
+#undef MIN
+#undef MAX
 
 #include "rtextures.c"
 #undef COLOR_EQUAL
@@ -239,11 +263,8 @@ static FORCE_INLINE double my_signbitf(float x) { return __builtin_signbitf(x); 
 
 #include "utils.c"
 
-#if defined(_WIN32)
-#   define HWND HWND_
-#endif
-#include "rcore.c"
-#undef GLFW_INCLUDE_NONE
+
+#undef _unused
 
 #if defined(_WIN32)
 //  use pragma linking directly for windows
@@ -254,7 +275,6 @@ static FORCE_INLINE double my_signbitf(float x) { return __builtin_signbitf(x); 
 #   pragma comment(lib, "xinput.lib")
 
 //  HACK for raudio
-#   undef _unused
 #   include "external/miniaudio.h"
 #   undef _WIN32
 #   define dlsym GetProcAddress

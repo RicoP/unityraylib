@@ -5,7 +5,8 @@ import sys
 # Directories where includes should be inlined
 INLINE_INCLUDE_PATHS_DEFAULTS = [
     os.path.abspath("../include/unityraylib/raylib"),
-    os.path.abspath("../include/unityraylib/raylib/external/glfw/include")
+    os.path.abspath("../include/unityraylib/raylib/external/glfw/include"),
+    os.path.abspath("../include/unityraylib/raylib/external/glfw/src")
 ]
 
 include_paths = []
@@ -13,6 +14,9 @@ miniaudio_counter = 0
 
 # Tracks files that have `#pragma once` to avoid multiple inclusion
 included_files = set()
+
+def no_ws(line):
+    return re.sub(r'\s+', '', line)
 
 def process_file(file_path):
     global include_paths
@@ -31,7 +35,8 @@ def process_file(file_path):
 
     with open(abs_path, "r") as f:
         included_files.add(abs_path)
-        for line in f:
+        lines = list(f)
+        for line in lines:
             # skip #pragma once
             if re.match(r'^\s*#\s*pragma\s+once', line):
                 continue
@@ -46,7 +51,13 @@ def process_file(file_path):
                     candidate_path = os.path.join(include_dir, include_file)
                     candidate_path = os.path.abspath(candidate_path)
                     if os.path.exists(candidate_path):
-                        if candidate_path in included_files and not include_file == "external/miniaudio.h":
+                        is_cached = candidate_path in included_files and not include_file == "external/miniaudio.h"
+                        # always include egl_context.c and osmesa_context.c
+                        if include_file.endswith("egl_context.c"):
+                            is_cached = False
+                        if include_file.endswith("osmesa_context.c"):
+                            is_cached = False
+                        if is_cached:
                             print(f"// {line}", end="")
                             print(f'{file_path}->{include_file} ignored', file=sys.stderr)
                         else:
@@ -63,14 +74,26 @@ def process_file(file_path):
                     # Keep the include as is if not in the allowed paths
                     print(line, end="")
             else:
-                # keep line as is
-                print(line, end="")
-                # hack for miniaudio.h where the first
-                # time we just want to parse the header
-                if re.sub(r'\s+', '', line) == "#endif/*miniaudio_h*/":
-                    miniaudio_counter += 1
-                    if miniaudio_counter == 1:
-                        break
+                if no_ws(line) == no_ws("#include STBIR__HEADER_FILENAME"):
+                    # stb_image_resize2.h must be handled extra because it includes itself!
+                    print(f' special case for stb_image_resize2', file=sys.stderr)
+                    include_line = False
+                    for stbline in lines:
+                        if no_ws(stbline) == no_ws("#endif // STB_IMAGE_RESIZE_DO_HORIZONTALS/VERTICALS/CODERS"):
+                           include_line = False
+                        if include_line:
+                            print(stbline, end="")
+                        if no_ws(stbline) == no_ws("#else  // STB_IMAGE_RESIZE_HORIZONTALS&STB_IMAGE_RESIZE_DO_VERTICALS"):
+                            include_line = True
+                else:
+                    # keep line as is
+                    print(line, end="")
+                    # hack for miniaudio.h where the first
+                    # time we just want to parse the header
+                    if re.sub(r'\s+', '', line) == "#endif/*miniaudio_h*/":
+                        miniaudio_counter += 1
+                        if miniaudio_counter == 1:
+                            break
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
