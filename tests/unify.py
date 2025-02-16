@@ -54,12 +54,13 @@ def process_file(file_path):
                     candidate_path = os.path.join(include_dir, include_file)
                     candidate_path = os.path.abspath(candidate_path)
                     if os.path.exists(candidate_path):
-                        is_cached = candidate_path in included_files and not include_file == "external/miniaudio.h"
-                        # always include egl_context.c and osmesa_context.c
-                        if include_file.endswith("egl_context.c"):
-                            is_cached = False
-                        if include_file.endswith("osmesa_context.c"):
-                            is_cached = False
+                        is_cached = candidate_path in included_files
+                        # always include those files
+                        is_cached = is_cached and not include_file.endswith("egl_context.c")
+                        is_cached = is_cached and not include_file.endswith("osmesa_context.c")
+                        is_cached = is_cached and not include_file.endswith("win32_clipboard.h")
+                        is_cached = is_cached and not include_file.endswith("miniaudio.h")
+
                         if is_cached:
                             print(f"// {line}")
                             log(f'{file_path}->{include_file} ignored')
