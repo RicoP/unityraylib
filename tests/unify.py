@@ -15,6 +15,9 @@ miniaudio_counter = 0
 # Tracks files that have `#pragma once` to avoid multiple inclusion
 included_files = set()
 
+def log(s):
+    print(s, file=sys.stderr)
+
 def no_ws(line):
     return re.sub(r'\s+', '', line)
 
@@ -31,11 +34,11 @@ def process_file(file_path):
             include_paths = INLINE_INCLUDE_PATHS_DEFAULTS.copy()
             include_paths.append(include_dir)
 
-    #print(f'processing file {abs_path}', file=sys.stderr)
+    #log(f'processing file {abs_path}')
 
     with open(abs_path, "r") as f:
         included_files.add(abs_path)
-        lines = list(f)
+        lines = [line.rstrip() for line in f] # turn file into a list of lines, stripping trailing ws
         for line in lines:
             # skip #pragma once
             if re.match(r'^\s*#\s*pragma\s+once', line):
@@ -58,36 +61,36 @@ def process_file(file_path):
                         if include_file.endswith("osmesa_context.c"):
                             is_cached = False
                         if is_cached:
-                            print(f"// {line}", end="")
-                            print(f'{file_path}->{include_file} ignored', file=sys.stderr)
+                            print(f"// {line}")
+                            log(f'{file_path}->{include_file} ignored')
                         else:
-                            print(f'{file_path}->{include_file}', file=sys.stderr)
-                            print(f"/// START {'/' * len(include_file)} START ///\n", end="")
-                            print(f"///       {     include_file      }       ///\n", end="")
-                            print(f"/// START {'/' * len(include_file)} START ///\n", end="")
+                            log(f'{file_path}->{include_file}')
+                            print(f"/// START {'/' * len(include_file)} START ///")
+                            print(f"///       {     include_file      }       ///")
+                            print(f"/// START {'/' * len(include_file)} START ///")
                             process_file(candidate_path)
-                            print(f"///  END  {'/' * len(include_file)}  END  ///\n", end="")
-                            print(f"///       {     include_file      }       ///\n", end="")
-                            print(f"///  END  {'/' * len(include_file)}  END  ///\n", end="")
+                            print(f"///  END  {'/' * len(include_file)}  END  ///")
+                            print(f"///       {     include_file      }       ///")
+                            print(f"///  END  {'/' * len(include_file)}  END  ///")
                         break
                 else:
                     # Keep the include as is if not in the allowed paths
-                    print(line, end="")
+                    print(line)
             else:
                 if no_ws(line) == no_ws("#include STBIR__HEADER_FILENAME"):
                     # stb_image_resize2.h must be handled extra because it includes itself!
-                    print(f' special case for stb_image_resize2', file=sys.stderr)
+                    log(f' special case for stb_image_resize2')
                     include_line = False
                     for stbline in lines:
                         if no_ws(stbline) == no_ws("#endif // STB_IMAGE_RESIZE_DO_HORIZONTALS/VERTICALS/CODERS"):
                            include_line = False
                         if include_line:
-                            print(stbline, end="")
+                            print(stbline)
                         if no_ws(stbline) == no_ws("#else  // STB_IMAGE_RESIZE_HORIZONTALS&STB_IMAGE_RESIZE_DO_VERTICALS"):
                             include_line = True
                 else:
                     # keep line as is
-                    print(line, end="")
+                    print(line)
                     # hack for miniaudio.h where the first
                     # time we just want to parse the header
                     if re.sub(r'\s+', '', line) == "#endif/*miniaudio_h*/":
