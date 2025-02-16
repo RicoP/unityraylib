@@ -1,6 +1,7 @@
 import os
 import re
 import sys
+import unicodedata
 
 # Directories where includes should be inlined
 INLINE_INCLUDE_PATHS_DEFAULTS = [
@@ -21,6 +22,26 @@ def log(s):
 def no_ws(line):
     return re.sub(r'\s+', '', line)
 
+REPLACEMENTS = {
+    "«": "<<",
+    "»": ">>",
+    "–": "-",   # En dash
+    "—": "--",  # Em dash
+    "“": '"',  
+    "”": '"',  
+    "‘": "'",  
+    "’": "'",
+    "…": "...",
+}
+
+def normalize_line(text):
+    # Normalize Unicode (NFKD) to break down accents
+    normalized = unicodedata.normalize('NFKD', text)
+    # Replace specific characters
+    translated = ''.join(REPLACEMENTS.get(c, c) for c in normalized)
+    # Encode/decode to remove remaining non-ASCII characters
+    return translated.encode('ascii', 'ignore').decode('ascii').rstrip()
+
 def process_file(file_path):
     global include_paths
     global miniaudio_counter
@@ -38,7 +59,7 @@ def process_file(file_path):
 
     with open(abs_path, "r") as f:
         included_files.add(abs_path)
-        lines = [line.rstrip() for line in f] # turn file into a list of lines, stripping trailing ws
+        lines = [normalize_line(line) for line in f] # turn file into a list of lines, stripping trailing ws
         for line in lines:
             # skip #pragma once
             if re.match(r'^\s*#\s*pragma\s+once', line):
